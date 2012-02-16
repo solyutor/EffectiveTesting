@@ -9,14 +9,12 @@ namespace EffectiveTesting
         private readonly int _build;
         private readonly int _revision;
 
-        public Version(string version)
+        public Version(int major, int minor, int build, int revision)
         {
-            var versionNumbers = version.Split('.');
-
-            _major = Convert.ToInt32(versionNumbers[0]);
-            _minor = Convert.ToInt32(versionNumbers[1]);
-            _build = Convert.ToInt32(versionNumbers[2]);
-            _revision = Convert.ToInt32(versionNumbers[3]);
+            _major = major;
+            _minor = minor;
+            _build = build;
+            _revision = revision;
         }
 
         public int Revision
@@ -41,7 +39,38 @@ namespace EffectiveTesting
 
         public override string ToString()
         {
-            return string.Format("{0}.{1}.{2}.{3}", Major, Minor, Build, Revision);
+            return string.Format("Version = '{0}.{1}.{2}.{3}'", Major, Minor, Build, Revision);
+        }
+
+        public ShortVersion ToShortVersion()
+        {
+            return new ShortVersion {Major = Major, Minor = Minor};
+        }
+
+
+        public static Version Parse(string version)
+        {
+            var versionNumbers = version.Split('.');
+
+            var major = Convert.ToInt32(versionNumbers[0]);
+            var minor = Convert.ToInt32(versionNumbers[1]);
+            var build = Convert.ToInt32(versionNumbers[2]);
+            var revision = Convert.ToInt32(versionNumbers[3]);
+
+            return new Version(major, minor, build, revision);
+        }
+
+
+        public static Version ParseWithError(string version)
+        {
+            var versionNumbers = version.Split('.');
+
+            var major = Convert.ToInt32(versionNumbers[0]);
+            var minor = Convert.ToInt32(versionNumbers[1]);
+            var build = Convert.ToInt32(versionNumbers[3]); //error
+            var revision = Convert.ToInt32(versionNumbers[2]); //error
+
+            return new Version(major, minor, build, revision);
         }
     }
 }

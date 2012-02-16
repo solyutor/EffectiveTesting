@@ -9,7 +9,7 @@ namespace EffectiveTesting.Post2Instruments
         [Test]
         public void Constructor_parses_string_properly()
         {
-            var version = new Version("1.2.330.400");
+            var version = Version.ParseWithError("1.2.330.400");
 
             //Обратите внимание, все сообщения консоли будут выведены в GUI NUnit
             //Часто таким способом полезно "логгировать" прохождене теста
@@ -24,7 +24,7 @@ namespace EffectiveTesting.Post2Instruments
         [Test]
         public void Constructor_parses_string_properly_with_fluent_API()
         {
-            var version = new Version("1.2.330.400");
+            var version = Version.Parse("1.2.330.400");
 
             //Обратите внимание, все сообщения консоли будут выведены в GUI NUnit
             //Часто таким способом полезно "логгировать" прохождене теста
@@ -39,7 +39,7 @@ namespace EffectiveTesting.Post2Instruments
         [Test]
         public void Constructor_parses_string_properly_in_the_wrong_way()
         {
-            var version = new Version("1.2.330.400");
+            var version = Version.Parse("1.2.330.400");
 
             //Обратите внимание, все сообщения консоли будут выведены в GUI NUnit
             //Часто таким способом полезно "логгировать" прохождене теста
