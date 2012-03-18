@@ -47,6 +47,15 @@ public class Clock : IClock
         get { return GetNow();}
     }
     
+    public void SetFreezed(DateTime freezed)
+    {
+        _freezedValue = freezed;
+    }
+    public void Reset()
+    {
+        _freezedValue = null;
+    }
+    
     private DateTime GetNow()
     {
         if(_mode == Clock.Mode.Normal) return DateTime.Now;
