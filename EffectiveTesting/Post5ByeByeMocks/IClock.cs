@@ -9,34 +9,36 @@ public interface IClock
 
 public class Clock : IClock
 {
-    public enum Mode 
+    public enum ClockMode 
     {
-        Normal, 
-        Freezed
+        RealTime, 
+        FixedTime
     }
     
-    private Mode _mode;
+    public readonly ClockMode Mode;
+    
+    private readonly object _latch;
     private DateTime? _freezedValue;
-    
-    private static readonly Clock Default;
-    private static readonly Clock Freezed;
-    
+
+    public static readonly Clock RealTime;
+    public static readonly Clock FixedTime;
+
     static Clock()
     {
-        Default = new Clock();
-        Freezed = new Clock(Mode.Freezed);
+        RealTime = new Clock();
+        FixedTime = new Clock(ClockMode.FixedTime);
     }
-    
-    public Clock() : this(Mode.Normal)
+
+    public Clock() : this(ClockMode.RealTime) 
     {
-        
     }
-    
-    public Clock(Mode mode)
+
+    public Clock(ClockMode mode)
     {
-        _mode = mode;
+        Mode = mode;
+        _latch = new object();
     }
-    
+
     public DateTime Today
     {
         get { return GetNow().Date;}
@@ -47,24 +49,42 @@ public class Clock : IClock
         get { return GetNow();}
     }
     
-    public void SetFreezed(DateTime freezed)
+    public void SetCurrentTime(DateTime value)
     {
-        _freezedValue = freezed;
+        SetFreezedValue(value);
     }
-    public void Reset()
+
+    public void NextValue()
     {
-        _freezedValue = null;
+        SetFreezedValue(null);
     }
-    
+
     private DateTime GetNow()
     {
-        if(_mode == Clock.Mode.Normal) return DateTime.Now;
+        if(Mode == ClockMode.RealTime) return DateTime.Now;
             
-        if(_freezedValue.HasValue == false)
+        lock(_latch)
         {
-            _freezedValue = DateTime.Now;
+            if(_freezedValue.HasValue == false)
+            {
+                SetFreezedValue(DateTime.Now);
+            }
+            return _freezedValue.Value;
         }
-        
-        return _freezedValue.Value;
+    }
+    
+    private void EnsureFixedMode()
+    {
+        if(Mode == ClockMode.RealTime)
+            throw new InvalidOperationException("This operation is possible in Fixed mode only.");
+    }
+    
+    public void SetFreezedValue(DateTime? value)
+    {
+        EnsureFixedMode();
+        lock(_latch)
+        {
+            _freezedValue = value;
+        }
     }
 }
