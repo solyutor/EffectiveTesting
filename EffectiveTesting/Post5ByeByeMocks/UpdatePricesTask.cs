@@ -1,4 +1,5 @@
-﻿using NHibernate;
+﻿using EffectiveTesting.Post5ByeByeMocks;
+using NHibernate;
 
 public class UpdatePricesTask : ITask
 {

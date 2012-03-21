@@ -1,4 +1,5 @@
-﻿using NHibernate;
+﻿using EffectiveTesting.Post5ByeByeMocks;
+using NHibernate;
 using NUnit.Framework;
 using Moq;
 using System;
@@ -27,19 +28,15 @@ public class TestWithoutMocks
             .Verifiable();
 
         var queryMock = repo.Create<IQuery>();
-        //Проблема с последовательностью вызовов SetParameter и List
-        //Невозможно убедиться, что нам будут возврщены правильные цены, ведь мы подставим их сами. 
         queryMock
             .Setup(x => x.SetParameter("currentDate", currentDate))
             .Returns(queryMock.Object);
-            
         queryMock
             .Setup(x => x.List<Price>())
             .Returns(pricesToUpdate);
-            
         
         var sessionMock = repo.Create<ISession>();
-        
+
         sessionMock
             .Setup(x => x.BeginTransaction())
             .Returns(transactionMock.Object)
@@ -48,8 +45,7 @@ public class TestWithoutMocks
         sessionMock
             .Setup(x => x.CreateQuery("from Price p where p.ValidFrom >= :currentDate and :currentDate <= p.ValidTo"))
             .Returns(queryMock.Object);
-        
-        
+
         var sessionFactoryMock = repo.Create<ISessionFactory>();
         sessionFactoryMock
             .Setup(x => x.OpenSession())
@@ -66,7 +62,7 @@ public class TestWithoutMocks
             .Setup(x => x.GetRateOn(currentDate))
             .Returns(2);
         
-        var task = new UpdatePricesTask(sessionFactoryMock.Object, clockMock.Object, rateProviderMock.Object);
+        var task = new UpdatePricesTask(sessionFactoryMock.Object, Clock.FixedTime, rateProviderMock.Object);
         
         //Act.
         task.Run();

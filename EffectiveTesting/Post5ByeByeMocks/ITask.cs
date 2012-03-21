@@ -1,11 +1,7 @@
-﻿using System;
-
-public interface ITask
+﻿namespace EffectiveTesting.Post5ByeByeMocks
 {
-    void Run();
-}
-
-public interface IRateProvider
-{
-    decimal GetRateOn(DateTime date);
+    public interface ITask
+    {
+        void Run();
+    }
 }

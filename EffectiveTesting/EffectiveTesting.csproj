@@ -35,10 +35,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Enhima.Entities">
-      <HintPath>..\.nuget\Enhima.Entities.0.9.22-beta\lib\Net35\Enhima.Entities.dll</HintPath>
+      <HintPath>..\packages\Enhima.Entities.0.9.22-beta\lib\Net35\Enhima.Entities.dll</HintPath>
     </Reference>
     <Reference Include="Enhima.Mapping">
-      <HintPath>..\.nuget\Enhima.Mapping.0.9.22-beta\lib\Net35\Enhima.Mapping.dll</HintPath>
+      <HintPath>..\packages\Enhima.Mapping.0.9.22-beta\lib\Net35\Enhima.Mapping.dll</HintPath>
     </Reference>
     <Reference Include="FluentAssertions">
       <HintPath>..\packages\FluentAssertions.1.7.0\Lib\net35\FluentAssertions.dll</HintPath>
@@ -73,7 +73,9 @@
     <Compile Include="Post3AdvancedInstruments\FluentAssertionFixture.cs" />
     <Compile Include="Post4Mocking\OrderPresenter.cs" />
     <Compile Include="Post4Mocking\OrderListPresenterFixture.cs" />
+    <Compile Include="Post5ByeByeMocks\Clock.cs" />
     <Compile Include="Post5ByeByeMocks\IClock.cs" />
+    <Compile Include="Post5ByeByeMocks\IRateProvider.cs" />
     <Compile Include="Post5ByeByeMocks\ITask.cs" />
     <Compile Include="Post5ByeByeMocks\Price.cs" />
     <Compile Include="Post5ByeByeMocks\TestWithoutMocks.cs" />
@@ -90,7 +92,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Post5ByeByeMocks" />
+    <Content Include="Enhima.license.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
