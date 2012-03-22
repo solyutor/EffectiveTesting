@@ -79,7 +79,7 @@
     <Compile Include="Post5ByeByeMocks\ITask.cs" />
     <Compile Include="Post5ByeByeMocks\Price.cs" />
     <Compile Include="Post5ByeByeMocks\TestWithMocks.cs" />
-    <Compile Include="Post5ByeByeMocks\TestWithoutMocks.cs" />
+    <Compile Include="Post5ByeByeMocks\IFoo.cs" />
     <Compile Include="Post5ByeByeMocks\UpdatePricesTask.cs" />
     <Compile Include="ShortVersion.cs" />
     <Compile Include="Version.cs" />

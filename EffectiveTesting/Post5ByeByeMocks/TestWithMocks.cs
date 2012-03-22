@@ -1,78 +1,80 @@
 using System;
 using System.Collections.Generic;
-using EffectiveTesting.Post5ByeByeMocks;
 using Moq;
 using NHibernate;
 using NUnit.Framework;
 
-[TestFixture]
-public class TestWithMocks
+namespace EffectiveTesting.Post5ByeByeMocks
 {
-    [Test]
-    public void TestUsingMocks()
+    [TestFixture]
+    public class TestWithMocks
     {
-        //Arrange.
-        var currentDate = DateTime.Today;
-        var price = new Price(10);
-        var pricesToUpdate = new List<Price>{ price };
+        [Test]
+        public void TestUsingMocks()
+        {
+            //Arrange.
+            var currentDate = DateTime.Today;
+            var price = new Price(10);
+            var pricesToUpdate = new List<Price>{ price };
         
-        var repo = new MockRepository(MockBehavior.Loose);
+            var repo = new MockRepository(MockBehavior.Loose);
         
-        var transactionMock = repo.Create<ITransaction>();
-        transactionMock
-            .Setup(x => x.Commit())
-            .Verifiable();
+            var transactionMock = repo.Create<ITransaction>();
+            transactionMock
+                .Setup(x => x.Commit())
+                .Verifiable();
 
-        var queryMock = repo.Create<IQuery>();
-        queryMock
-            .Setup(x => x.SetParameter("currentDate", currentDate))
-            .Returns(queryMock.Object);
-        queryMock
-            .Setup(x => x.List<Price>())
-            .Returns(pricesToUpdate);
+            var queryMock = repo.Create<IQuery>();
+            queryMock
+                .Setup(x => x.SetParameter("currentDate", currentDate))
+                .Returns(queryMock.Object);
+            queryMock
+                .Setup(x => x.List<Price>())
+                .Returns(pricesToUpdate);
         
-        var sessionMock = repo.Create<ISession>();
+            var sessionMock = repo.Create<ISession>();
 
-        sessionMock
-            .Setup(x => x.BeginTransaction())
-            .Returns(transactionMock.Object)
-            .Verifiable();
+            sessionMock
+                .Setup(x => x.BeginTransaction())
+                .Returns(transactionMock.Object)
+                .Verifiable();
         
-        sessionMock
-            .Setup(x => x.CreateQuery("from Price p where p.ValidFrom >= :currentDate and :currentDate <= p.ValidTo"))
-            .Returns(queryMock.Object);
+            sessionMock
+                .Setup(x => x.CreateQuery("from Price p where p.ValidFrom >= :currentDate and :currentDate <= p.ValidTo"))
+                .Returns(queryMock.Object);
 
-        var sessionFactoryMock = repo.Create<ISessionFactory>();
-        sessionFactoryMock
-            .Setup(x => x.OpenSession())
-            .Returns(sessionMock.Object);
+            var sessionFactoryMock = repo.Create<ISessionFactory>();
+            sessionFactoryMock
+                .Setup(x => x.OpenSession())
+                .Returns(sessionMock.Object);
         
-        var clockMock = repo.Create<IClock>();
-        clockMock
-            .SetupGet( x => x.Today)
-            .Returns(currentDate);
+            var clockMock = repo.Create<IClock>();
+            clockMock
+                .SetupGet( x => x.Today)
+                .Returns(currentDate);
         
-        var rateProviderMock = repo.Create<IRateProvider>();
+            var rateProviderMock = repo.Create<IRateProvider>();
         
-        rateProviderMock
-            .Setup(x => x.GetRateOn(currentDate))
-            .Returns(2);
+            rateProviderMock
+                .Setup(x => x.GetRateOn(currentDate))
+                .Returns(2);
         
-        var task = new UpdatePricesTask(sessionFactoryMock.Object, Clock.FixedTime, rateProviderMock.Object);
+            var task = new UpdatePricesTask(sessionFactoryMock.Object, Clock.FixedTime, rateProviderMock.Object);
         
-        //Act.
-        task.Run();
+            //Act.
+            task.Run();
         
-        //Assert.
-        Assert.That(price.LocalAmount, Is.EqualTo(20));
-        repo.VerifyAll();
-    }
+            //Assert.
+            Assert.That(price.LocalAmount, Is.EqualTo(20));
+            repo.VerifyAll();
+        }
     
-    [Test]
-    public void FooWorksFine()
-    {
-        var fooMock = new Mock<IFoo>();
-        fooMock.SetupAllProperties();
-        //other stuff
+        [Test]
+        public void FooWorksFine()
+        {
+            var fooMock = new Mock<IFoo>();
+            fooMock.SetupAllProperties();
+            //other stuff
+        }
     }
 }
