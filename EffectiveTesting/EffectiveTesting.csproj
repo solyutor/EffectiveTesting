@@ -78,6 +78,7 @@
     <Compile Include="Post5ByeByeMocks\IRateProvider.cs" />
     <Compile Include="Post5ByeByeMocks\ITask.cs" />
     <Compile Include="Post5ByeByeMocks\Price.cs" />
+    <Compile Include="Post5ByeByeMocks\TestWithMocks.cs" />
     <Compile Include="Post5ByeByeMocks\TestWithoutMocks.cs" />
     <Compile Include="Post5ByeByeMocks\UpdatePricesTask.cs" />
     <Compile Include="ShortVersion.cs" />
