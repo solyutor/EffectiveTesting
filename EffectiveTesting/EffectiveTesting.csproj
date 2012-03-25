@@ -34,11 +34,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Enhima.Entities">
-      <HintPath>..\packages\Enhima.Entities.0.9.22-beta\lib\Net35\Enhima.Entities.dll</HintPath>
+    <Reference Include="Enhima.Entities, Version=1.0.0.0, Culture=neutral, PublicKeyToken=5eb632d4e3f9a6cb, processorArchitecture=MSIL">
+      <HintPath>..\packages\Enhima.Entities.0.9.24-beta\lib\Net35\Enhima.Entities.dll</HintPath>
     </Reference>
-    <Reference Include="Enhima.Mapping">
-      <HintPath>..\packages\Enhima.Mapping.0.9.22-beta\lib\Net35\Enhima.Mapping.dll</HintPath>
+    <Reference Include="Enhima.Mapping, Version=0.9.24.0, Culture=neutral, PublicKeyToken=5eb632d4e3f9a6cb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Enhima.Mapping.0.9.24-beta\lib\Net35\Enhima.Mapping.dll</HintPath>
     </Reference>
     <Reference Include="FluentAssertions">
       <HintPath>..\packages\FluentAssertions.1.7.0\Lib\net35\FluentAssertions.dll</HintPath>
@@ -63,6 +64,12 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.SQLite">
+      <HintPath>..\packages\System.Data.SQLite.x64.1.0.79.0\lib\net40\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SQLite.Linq">
+      <HintPath>..\packages\System.Data.SQLite.x64.1.0.79.0\lib\net40\System.Data.SQLite.Linq.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
@@ -76,10 +83,12 @@
     <Compile Include="Post5ByeByeMocks\Clock.cs" />
     <Compile Include="Post5ByeByeMocks\IClock.cs" />
     <Compile Include="Post5ByeByeMocks\IRateProvider.cs" />
+    <Compile Include="Post5ByeByeMocks\ISessionManager.cs" />
     <Compile Include="Post5ByeByeMocks\ITask.cs" />
     <Compile Include="Post5ByeByeMocks\Price.cs" />
     <Compile Include="Post5ByeByeMocks\TestWithMocks.cs" />
     <Compile Include="Post5ByeByeMocks\IFoo.cs" />
+    <Compile Include="Post5ByeByeMocks\TestWithoutMocks.cs" />
     <Compile Include="Post5ByeByeMocks\UpdatePricesTask.cs" />
     <Compile Include="ShortVersion.cs" />
     <Compile Include="Version.cs" />

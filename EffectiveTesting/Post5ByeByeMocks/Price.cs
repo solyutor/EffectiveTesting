@@ -9,28 +9,31 @@ namespace EffectiveTesting.Post5ByeByeMocks
 
         protected Price()
         {
-        
+            LastUpdated = DateTime.Now;
         }
     
-        public Price(decimal _amount)
+        public Price(decimal amount, DateTime lastUpdated)
         {
-            this._amount = _amount;
+            _amount = amount;   
+            LastUpdated = lastUpdated;
         }
-    
+
         public virtual decimal Amount
         {
-            get{return _amount;}
+            get{ return _amount; }
         }
     
         public virtual decimal LocalAmount 
         {
-            get{ return _localAmount;}
+            get{ return _localAmount; }
         }
     
         public virtual  DateTime ValidFrom {get;set;}
     
         public virtual DateTime ValidTo{get;set;}
-    
+
+        public virtual DateTime LastUpdated { get; set; }
+
         public virtual void UpdateLocalPriceUsing(decimal rate)
         {
             _localAmount = _amount * rate;
